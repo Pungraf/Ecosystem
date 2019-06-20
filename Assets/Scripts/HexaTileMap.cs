@@ -53,10 +53,7 @@ public class HexaTileMap : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < tiles.Length; i++)
-        {
-            tiles[i].Distance = 0;
-        }
+        FindDistancesTo(currentTile);
     }
 
     public void GenerateMap()
@@ -128,6 +125,13 @@ public class HexaTileMap : MonoBehaviour
             {
                 fillMap[x, y] = (prnd.Next(0, 100) < fillPercent) ? 1 : 0;
             }
+        }
+    }
+    
+    public void FindDistancesTo (HexTile cell) {
+        for (int i = 0; i < tiles.Length; i++) {
+            tiles[i].Distance =
+                cell.coordinates.DistanceTo(tiles[i].coordinates);
         }
     }
 }
