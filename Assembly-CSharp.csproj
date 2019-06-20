@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\HexaTileMap.cs" />
     <Compile Include="Assets\Scripts\HexCoordinates.cs" />
+    <Compile Include="Assets\Scripts\HexDirectionExtensions.cs" />
     <Compile Include="Assets\Scripts\HexMetrics.cs" />
     <Compile Include="Assets\Scripts\HexTile.cs" />
     <Reference Include="Unity.Timeline.Editor">

@@ -11,9 +11,12 @@ public class HexaTileMap : MonoBehaviour
     
     public int width = 6;
     public int height = 6;
-    
-    public HexTile waterTilePrefab;
-    public HexTile groundTilePrefab;
+    public int waterTileSmooth = 4;
+
+    public Color waterTileColor;
+    public Color groundTileColor;
+
+    public HexTile tilePrefab;
     public Text tileCoordTextPrefab;
 
     private Canvas gridCanvas;
@@ -26,7 +29,7 @@ public class HexaTileMap : MonoBehaviour
         gridCanvas = GetComponentInChildren<Canvas>();
         GenerateMap();
     }
-    
+
     void Update () {
         if (Input.GetMouseButtonDown(0)) {
             HandleInput();
@@ -72,11 +75,35 @@ public class HexaTileMap : MonoBehaviour
                 CreateCell(x, z, i++);
             }
         }
-    }
-
-    void SmoothMap()
-    {
         
+        //smoothing water terrain
+
+        for (int i = 0; i < 4; i++)
+        {
+            foreach (HexTile tile in tiles)
+            {
+                int waterNeighbour = 0;
+                foreach (HexTile tileNeighbor in tile.neighbors)
+                {
+                    if (tileNeighbor != null && tileNeighbor.tileType == HexTile.TileType.water)
+                    {
+                        waterNeighbour++;
+                    }
+                }
+
+                if (waterNeighbour > waterTileSmooth)
+                {
+                    tile.tileType = HexTile.TileType.water;
+                    tile.material.color = waterTileColor;
+                }
+
+                if (waterNeighbour == 0)
+                {
+                    tile.tileType = HexTile.TileType.ground;
+                    tile.material.color = groundTileColor;
+                }
+            }
+        }
     }
 
 
@@ -90,18 +117,42 @@ public class HexaTileMap : MonoBehaviour
         
         if (fillMap[x, z] == 0)
         {
-            tile = tiles[i] = Instantiate<HexTile>(waterTilePrefab);
+            tile = tiles[i] = Instantiate<HexTile>(tilePrefab);
+            tile.tileType = HexTile.TileType.water;
+            tile.material.color = waterTileColor;
             tile.transform.SetParent(transform, false);
             tile.transform.localPosition = position;
             tile.coordinates = HexCoordinates.FromOffsetCoordinates(x, z);
         }
         else
         {
-            tile = tiles[i] = Instantiate<HexTile>(groundTilePrefab);
+            tile = tiles[i] = Instantiate<HexTile>(tilePrefab);
+            tile.tileType = HexTile.TileType.ground;
+            tile.material.color = groundTileColor;
             tile.transform.SetParent(transform, false);
             tile.transform.localPosition = position;
             tile.coordinates = HexCoordinates.FromOffsetCoordinates(x, z);
         }
+        
+        if (x > 0) {
+            tile.SetNeighbor(HexDirection.W, tiles[i - 1]);
+        }
+        if (z > 0) {
+            if ((z & 1) == 0) {
+                tile.SetNeighbor(HexDirection.SE, tiles[i - width]);
+                if (x > 0) {
+                    tile.SetNeighbor(HexDirection.SW, tiles[i - width - 1]);
+                }
+            }
+            else {
+                tile.SetNeighbor(HexDirection.SW, tiles[i - width]);
+                if (x < width - 1) {
+                    tile.SetNeighbor(HexDirection.SE, tiles[i - width + 1]);
+                }
+            }
+        }
+        
+        
         
         Text label = Instantiate<Text>(tileCoordTextPrefab);
         tile.text = label;
@@ -128,10 +179,35 @@ public class HexaTileMap : MonoBehaviour
         }
     }
     
-    public void FindDistancesTo (HexTile cell) {
+    public void FindDistancesTo (HexTile tile) {
+        StopAllCoroutines();
+        StartCoroutine(Search(tile));
+    }
+
+    IEnumerator Search (HexTile tile) {
         for (int i = 0; i < tiles.Length; i++) {
-            tiles[i].Distance =
-                cell.coordinates.DistanceTo(tiles[i].coordinates);
+            tiles[i].Distance = int.MaxValue;
+        }
+        
+        WaitForSeconds delay = new WaitForSeconds(1 / 60f);
+        Queue<HexTile> frontier = new Queue<HexTile>();
+        tile.Distance = 0;
+        frontier.Enqueue(tile);
+        
+        while (frontier.Count > 0) {
+            yield return delay;
+            HexTile current = frontier.Dequeue();
+            for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {
+                HexTile neighbor = current.GetNeighbor(d);
+                if (neighbor == null || neighbor.Distance != int.MaxValue) {
+                    continue;
+                }
+                if (neighbor.tileType == HexTile.TileType.water) {
+                    continue;
+                }
+                neighbor.Distance = current.Distance + 1;
+                frontier.Enqueue(neighbor);
+            }
         }
     }
 }

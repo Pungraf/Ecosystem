@@ -13,6 +13,7 @@
         <e p="Scripts" t="Include">
           <e p="HexaTileMap.cs" t="Include" />
           <e p="HexCoordinates.cs" t="Include" />
+          <e p="HexDirectionExtensions.cs" t="Include" />
           <e p="HexMetrics.cs" t="Include" />
           <e p="HexTile.cs" t="Include" />
         </e>
