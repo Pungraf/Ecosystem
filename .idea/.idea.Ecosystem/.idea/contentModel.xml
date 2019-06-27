@@ -9,13 +9,25 @@
       <e p="Assets" t="Include">
         <e p="Editor" t="Include">
           <e p="HexCoordDrawer.cs" t="Include" />
+          <e p="HexCoordinatesDrawer.cs" t="Include" />
+        </e>
+        <e p="Materials" t="Include">
+          <e p="VertexColor.shader" t="Include" />
         </e>
         <e p="Scripts" t="Include">
-          <e p="HexaTileMap.cs" t="Include" />
+          <e p="HexCell.cs" t="Include" />
           <e p="HexCoordinates.cs" t="Include" />
-          <e p="HexDirectionExtensions.cs" t="Include" />
+          <e p="HexDirection.cs" t="Include" />
+          <e p="HexGrid.cs" t="Include" />
+          <e p="HexMapEditor.cs" t="Include" />
+          <e p="HexMesh.cs" t="Include" />
           <e p="HexMetrics.cs" t="Include" />
-          <e p="HexTile.cs" t="Include" />
+          <e p="Old" t="Include">
+            <e p="HexaTileMap.cs" t="Include" />
+            <e p="HexTile.cs" t="Include" />
+            <e p="Spawner.cs" t="Include" />
+          </e>
+          <e p="Utility.cs" t="Include" />
         </e>
       </e>
       <e p="Ecosystem.sln" t="IncludeFlat" />

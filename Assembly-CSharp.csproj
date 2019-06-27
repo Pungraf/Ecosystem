@@ -59,11 +59,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\HexaTileMap.cs" />
+    <Compile Include="Assets\Scripts\HexCell.cs" />
     <Compile Include="Assets\Scripts\HexCoordinates.cs" />
-    <Compile Include="Assets\Scripts\HexDirectionExtensions.cs" />
+    <Compile Include="Assets\Scripts\HexDirection.cs" />
+    <Compile Include="Assets\Scripts\HexGrid.cs" />
+    <Compile Include="Assets\Scripts\HexMapEditor.cs" />
+    <Compile Include="Assets\Scripts\HexMesh.cs" />
     <Compile Include="Assets\Scripts\HexMetrics.cs" />
-    <Compile Include="Assets\Scripts\HexTile.cs" />
+    <Compile Include="Assets\Scripts\Utility.cs" />
+    <None Include="Assets\Materials\VertexColor.shader" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Users/johny/Projekty/Ecosystem/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Editor\HexCoordDrawer.cs" />
+    <Compile Include="Assets\Editor\HexCoordinatesDrawer.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Users/johny/Projekty/Ecosystem/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
