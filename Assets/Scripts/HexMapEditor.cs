@@ -6,16 +6,14 @@ using UnityEngine.EventSystems;
 public class HexMapEditor : MonoBehaviour
 {
     public Color[] colors;
-
     public HexGrid hexGrid;
 
     private Color activeColor;
-    
-    int activeElevation;
+    private int activeElevation;
 
     void Awake () 
     {
-        SelectColor(0);
+        SelectColor(3);
     }
 
     void Update ()
@@ -41,7 +39,8 @@ public class HexMapEditor : MonoBehaviour
         activeColor = colors[index];
     }
     
-    void EditCell (HexCell cell) {
+    void EditCell (HexCell cell) 
+    {
         cell.color = activeColor;
         cell.Elevation = activeElevation;
         hexGrid.Refresh();

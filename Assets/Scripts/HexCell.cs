@@ -5,12 +5,14 @@ public class HexCell : MonoBehaviour
 {
     
     [SerializeField]
-    HexCell[] neighbors;
+    HexCell[] neighbors = new HexCell[6];
     
     public RectTransform uiRect;
+    public HexCoordinates coordinates;
+    public Color color;
     
     private int elevation;
-
+    // Setter automatically update label
     public int Elevation
     {
         get => elevation;
@@ -27,9 +29,6 @@ public class HexCell : MonoBehaviour
         }
     }
 
-    public HexCoordinates coordinates;
-    public Color color;
-    
     public HexCell GetNeighbor (HexDirection direction) 
     {
         return neighbors[(int)direction];

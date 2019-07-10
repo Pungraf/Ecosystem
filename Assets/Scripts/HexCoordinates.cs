@@ -23,6 +23,7 @@ public struct HexCoordinates
         }
     }
     
+    // Since hexagon have 6 sides we need 3rd axis to cover all directions
     public int Y 
     {
         get 
@@ -66,6 +67,7 @@ public struct HexCoordinates
         int iY = Mathf.RoundToInt(y);
         int iZ = Mathf.RoundToInt(-x -y);
         
+        // Avoid getting error while input is on the border of two cells
         if (iX + iY + iZ != 0) 
         {
             float dX = Mathf.Abs(x - iX);

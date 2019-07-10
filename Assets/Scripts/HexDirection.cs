@@ -1,3 +1,4 @@
+// Every hexagon side have assigned direction
 public enum HexDirection 
  {
      NE, E, SE, SW, W, NW

@@ -4,23 +4,18 @@ using UnityEngine;
 
 public static class HexMetrics
 {
+    // Constants used in generator
     public const int terracesPerSlope = 2;
-
     public const int terraceSteps = terracesPerSlope * 2 + 1;
-        
     public const float horizontalTerraceStepSize = 1f / terraceSteps;
     public const float verticalTerraceStepSize = 1f / (terracesPerSlope + 1);
-    
     public const float outerRadius = 10f;
-
     public const float innerRadius = outerRadius * 0.866025404f;
-    
     public const float solidFactor = 0.75f;
-	
     public const float blendFactor = 1f - solidFactor;
-    
     public const float elevationStep = 3f;
     
+    // Setting hexagon corners
     static Vector3[] corners =
     {
         new Vector3(0f, 0f, outerRadius),
@@ -31,17 +26,6 @@ public static class HexMetrics
         new Vector3(-innerRadius, 0f, 0.5f * outerRadius),
         new Vector3(0f, 0f, outerRadius)
     };
-
-    public static Vector3 GetFirstCorner (HexDirection direction)
-    {
-        return corners[(int)direction];
-    }
-
-    public static Vector3 GetSecondCorner (HexDirection direction) 
-    {
-        return corners[(int)direction + 1];
-    }
-    
     public static Vector3 GetFirstSolidCorner (HexDirection direction)
     {
         return corners[(int)direction] * solidFactor;
@@ -57,6 +41,7 @@ public static class HexMetrics
         return (corners[(int)direction] + corners[(int)direction + 1]) * blendFactor;
     }
     
+    // Return next vector for triangulating terraces
     public static Vector3 TerraceLerp (Vector3 a, Vector3 b, int step) 
     {
         float h = step * HexMetrics.horizontalTerraceStepSize;
